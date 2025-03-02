@@ -93,7 +93,7 @@ describe('Testes da Funcionalidade Usuários', () => {
       })
     })
        
-  it('Deve deletar um usuário previamente cadastrado', () => {
+  it('Deve deletar um usuário previamente cadastrado - DELETE', () => {
       cy.request({
       method: 'POST',
       url:  'usuarios',
