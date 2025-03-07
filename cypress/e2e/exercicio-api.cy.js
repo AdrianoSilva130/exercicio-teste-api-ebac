@@ -68,7 +68,7 @@ describe('Testes da Funcionalidade Usuários', () => {
      
   });
 
-  it.only('Deve editar um usuário previamente cadastrado - PUT', () => {
+  it('Deve editar um usuário previamente cadastrado - PUT', () => {
   cy.preCadastro(faker.person.firstName(), faker.internet.email(), 'teste', 'true')
     .then(response => {
       let id = response.body._id
@@ -87,16 +87,8 @@ describe('Testes da Funcionalidade Usuários', () => {
 
   it('Deve deletar um usuário previamente cadastrado - DELETE', () => {
       
-      cy.request({
-      method: 'POST',
-      url:  'usuarios',
-      body: {
-        "nome": (faker.person.fullName()),
-        "email": (faker.internet.email()),
-        "password": "teste",
-        "administrador": "true"   
-      }
-}).then((response) => {
+  cy.preCadastro(faker.person.firstName(), faker.internet.email(), 'teste', 'true')
+  .then((response) => {
   expect(response.status).to.eq(201);
   let id = response.body._id
   cy.request('DELETE', `usuarios/${id}`)
