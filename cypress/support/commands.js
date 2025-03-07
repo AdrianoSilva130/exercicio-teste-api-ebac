@@ -11,6 +11,7 @@ Cypress.Commands.add('token', (email, senha) => {
         return response.body.authorization
     })
  })
+ 
 
  Cypress.Commands.add('cadastrarProduto' , (token, produto, preco, descricao, quantidade) =>{
     cy.request({
@@ -25,6 +26,20 @@ Cypress.Commands.add('token', (email, senha) => {
           }, 
           failOnStatusCode: false
     })
+})
+
+Cypress.Commands.add('preCadastro' , (nome, email) => {
+
+    cy.request({
+        method: 'POST',
+        url:  'usuarios',
+        body: {
+          "nome": (nome),
+          "email": (email),
+          "password": "teste",
+          "administrador": "true"   
+        }
+  })
 })
 
  

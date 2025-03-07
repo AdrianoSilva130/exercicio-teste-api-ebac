@@ -3,6 +3,9 @@ import { faker } from '@faker-js/faker';
 
 import contrato from '../contracts/usuarios.contrato.js'
 
+
+
+
 const novoNome = faker.person.fullName();
     const novoEmail = faker.internet.email();
 
@@ -68,18 +71,10 @@ describe('Testes da Funcionalidade Usuários', () => {
      
   });
 
+
   it('Deve editar um usuário previamente cadastrado - PUT', () => {
-  
-    cy.request({
-      method: 'POST',
-      url:  'usuarios',
-      body: {
-        "nome": (faker.person.fullName()),
-        "email": (faker.internet.email()),
-        "password": "teste",
-        "administrador": "true"   
-      }
-}).then(response => {
+  cy.preCadastro(faker.person.firstName(), faker.internet.email(), 'teste', 'true')
+    .then(response => {
       let id = response.body._id
       cy.request('PUT', `usuarios/${id}`, {
         nome: novoNome,
@@ -94,18 +89,9 @@ describe('Testes da Funcionalidade Usuários', () => {
     })
        
 
-  it('Deve deletar um usuário previamente cadastrado', () => {
+  it('Deve deletar um usuário previamente cadastrado - DELETE', () => {
       
-      cy.request({
-      method: 'POST',
-      url:  'usuarios',
-      body: {
-        "nome": (faker.person.fullName()),
-        "email": (faker.internet.email()),
-        "password": "teste",
-        "administrador": "true"   
-      }
-}).then((response) => {
+    cy.preCadastro(faker.person.firstName(), faker.internet.email(), 'teste', 'true').then((response) => {
   expect(response.status).to.eq(201);
   let id = response.body._id
   cy.request('DELETE', `usuarios/${id}`)
