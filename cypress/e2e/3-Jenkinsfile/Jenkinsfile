@@ -2,17 +2,24 @@ pipeline {
     agent any
 
     stages {
-        stage('Setup') {
+        stage('Clonar o repositório') {
             steps {
                 git branch: 'main', url: 'https://github.com/AdrianoSilva130/ExercicioTesteAPI.git'
-                bat 'npm install'
+
             }
         }
-        stage('Test') {
+        stage('Instalar dependencias') {
             steps {
-               bat '''set NO_COLOR=1
-npm test'''
+               bat 'npm test'
             }
+        }
+    stage ('Executar Testes'){
+        steps {
+            bat 'NO_COLOR=1
+            npm run cy:run'
         }
     }
+    
+    }
+
 }
